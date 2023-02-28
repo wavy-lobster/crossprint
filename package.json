@@ -1,6 +1,6 @@
 {
   "name": "crossprint",
-  "version": "0.0.1",
+  "version": "1.0.1",
   "description": "CrossPrint is a lightweight library that enables you to convert HTML or any supported framework cross-browser",
   "mainDir": ":/lib",
   "files": [
