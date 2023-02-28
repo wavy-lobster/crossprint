@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: lts/*
+      - uses: actions/checkout@v3F
+
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
