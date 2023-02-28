@@ -20,7 +20,8 @@ jobs:
           node-version: lts/*
 
       - uses: pnpm/action-setup@v2
-
+        with:
+          version: 7.28.0
       - name: Get pnpm store directory
         id: pnpm-cache
         shell: bash
