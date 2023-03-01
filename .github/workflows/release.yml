@@ -44,6 +44,8 @@ jobs:
 
       - name: Build
         run: npm run build
+      - name: Disable Husky
+        run: npm pkg delete scripts.prepare
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
