@@ -113,7 +113,7 @@
         "@semantic-release/github",
         {
           "assets": [
-            "./dist/**"
+            "./dist/*"
           ],
           "message": "chore: Release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
         }
