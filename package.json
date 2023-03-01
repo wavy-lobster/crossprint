@@ -121,7 +121,7 @@
       [
         "@semantic-release/npm",
         {
-          "pkgRoot": "dist-a"
+          "pkgRoot": "dist"
         }
       ]
     ]
