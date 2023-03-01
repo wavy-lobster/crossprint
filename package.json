@@ -110,21 +110,18 @@
         }
       ],
       [
-        "@semantic-release/npm",
-        {
-          "pkgRoot": "./dist"
-        }
-      ],
-      [
         "@semantic-release/github",
         {
           "assets": [
-            "package.json",
-            "README.md",
-            "LICENSE",
-            "./dist/**/*.{js|.d.ts}"
+            "./dist/**"
           ],
           "message": "chore: Release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "./dist"
         }
       ]
     ]
