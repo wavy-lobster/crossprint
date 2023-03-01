@@ -7,7 +7,8 @@
   ],
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
+    "build": "tsc --project tsconfig.build.json && npm run copy",
+    "copy": "ncp ./package.json ./dist/package.json && ncp ./README.md ./dist/README.md && ncp ./LICENSE ./dist/LICENSE",
     "clean": "rm -rf ./lib/",
     "cm": "cz",
     "lint": "eslint ./src/ --fix",
@@ -55,6 +56,7 @@
     "eslint-plugin-prettier": "^3.4.1",
     "husky": "^6.0.0",
     "lint-staged": "^10.5.4",
+    "ncp": "^2.0.0",
     "prettier": "^2.8.4",
     "react": "^18.2.0",
     "semantic-release": "^19.0.5",
@@ -118,7 +120,7 @@
           "assets": [
             "package.json",
             "README.md",
-            "CHANGELOG.md",
+            "LICENSE",
             "dist/**/*.{js|.d.ts}"
           ],
           "message": "chore: Release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
