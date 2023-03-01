@@ -125,6 +125,18 @@ import { PrinterBuilder, sendPrintEvent, sendPrintEventAsync } from 'crossprint'
 
 - `Firefox for Android` - doesn't support `print()` and `window.print()`. (see [here](https://developer.mozilla.org/en-US/docs/Web/API/Window/print#browser_compatibility))
 
+## Contributing
+
+Contributions are welcome!
+
+### Adding a new framework
+
+If you want to add a new framework, you can use the `PrinterBuilder` class to create your own implementation.
+
+Just flow the steps [API](#api) and you should be good to go.
+
+if you have a working implementation, please open a PR to add it to the list.
+
 [build-img]: https://github.com/wavy-lobster/crossprint/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/wavy-lobster/crossprint/actions/workflows/release.yml
 [downloads-img]: https://img.shields.io/npm/dt/crossprint
