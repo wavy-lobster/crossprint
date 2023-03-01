@@ -1,11 +1,7 @@
-import { Logger, LogLevel } from "../logger.internal";
-import { PrinterOptions, PrinterEvents, Printer } from "./index";
+import { PrinterOptions, PrinterEvents, Printer } from ".";
+import type { LogLevel } from "../logger";
 
 export class PrinterBuilder {
-  #logger = new Logger();
-  get logger() {
-    return this.#logger;
-  }
   #options: PrinterOptions = {};
   addEvent<K extends PrinterEvents>(
     event: K,
@@ -28,7 +24,7 @@ export class PrinterBuilder {
   }
 
   loggerLevel(level?: LogLevel): PrinterBuilder {
-    if (level) this.#logger.level = level;
+    if (level) this.#options.logLevel = level;
     return this;
   }
 
@@ -43,23 +39,20 @@ export class PrinterBuilder {
   }
   #buildedPrinter: Printer | null = null;
   build(): Printer {
-    this.#buildedPrinter = new Printer(this.#options, this.#logger);
+    this.#buildedPrinter = new Printer(this.#options);
     return this.#buildedPrinter;
   }
   getBuildedPrinter() {
     return this.#buildedPrinter;
   }
 
-  fromOptions(opts: PrinterOptions) {
-    this.#options = opts;
-    if (opts.logLevel) this.#logger.level = opts.logLevel;
+  fromOptions(opts?: PrinterOptions) {
+    if (opts) this.#options = opts;
     return this;
   }
 
   destroy() {
     this.#buildedPrinter?.remove();
-
     this.#buildedPrinter = null;
-    this.#logger.debug("Destroyed printer");
   }
 }

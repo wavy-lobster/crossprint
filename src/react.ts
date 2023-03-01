@@ -1,65 +1,33 @@
-import React, { useEffect, useRef } from "react";
-import { createElement } from "react";
-import { sendPrintSignal, PrinterOptions } from "./printer";
+import { createElement, useEffect, useRef } from "react";
+import { sendPrintEventAsync, PrinterOptions } from "./printer";
 import { PrinterBuilder } from "./printer/PrinterBuilder";
+export const print = sendPrintEventAsync;
 
 /**
-
- * @example <caption>With direct content</caption>
- * import { PrinterComponent } from "crossprint";
- * import { useRef } from "react";
- * export function App() {
- *      const ref = useRef<HTMLElement>();
- *   const printer = PrinterComponent({
- *       content: ref.current,
- *   });
- *   return (
- *       <>
- *           <div ref={ref}>
- *               <div>test</div>
- *               // Your content here
- *               //
- *           </div>
- *           <button onClick={printer?.print}>Print</button>
- *       </>
- * }
- */
-
-export const print = () => {
-  void sendPrintSignal();
-};
-/**
- *   @example <caption>With children</caption>
- * import PrinterComponent, { print } from "crossprint";
- *
- * export default function App() {
- *  return (
- *   <PrinterComponent title="test" pageStyle="body { background-color: red }">
- *    <div>test</div>
- *    <MuiButton onClick={print}>Print</MuiButton>
- *  </PrinterComponent>
- *  );
- * }
- *
+ * This hook is used to print the content of a ref.
+ * Make sure to mount the ref.
  */
 export function usePrinter(props: {
-  options?: PrinterOptions;
+  options?: Omit<PrinterOptions, "content">;
   ref?: React.MutableRefObject<HTMLElement | undefined | null>;
 }) {
   const { options, ref } = props;
 
   let builder: PrinterBuilder;
   useEffect(() => {
-    if (!ref?.current) return;
+    if (ref == null) return;
     builder = new PrinterBuilder().fromOptions({
       ...options,
-      content: ref.current,
-      // We need to mount all elements before copying them to the iframe
-      copyFonts: false,
-      copyStyles: false,
       hidden: true,
       title: options?.title || document.title,
     });
+    if (ref.current) builder.content(ref.current);
+
+    /**
+     * If you use Next.js or any other meta framework, the styles and fonts aren't loaded by default.
+     * You can use the `copyStyles` and `copyFonts` options to copy the styles and fonts to the iframe.
+     * It doesn't make any sense, but it works. ¯\_(ツ)_/¯
+     */
     builder.build().init({
       copyStyles: true,
       copyFonts: true,
@@ -68,21 +36,41 @@ export function usePrinter(props: {
       builder.destroy();
     };
   }, []);
-  return print;
+  return {
+    print,
+    //@ts-ignore
+    printer: builder || null,
+  } as {
+    print: () => void;
+    printer: PrinterBuilder | null;
+  };
 }
+/**
+ * React component to print the children. It will create a portal to the iframe. And mount the children inside the portal.
+ * @todo: Use "createPortal" to mount the children inside the iframe.
+ */
 
 export default function PrinterComponent(props: {
-  options?: PrinterOptions;
+  options?: Omit<PrinterOptions, "content">;
   children?: React.ReactNode;
 }) {
-  const { options, children } = props;
-  const ref = useRef<HTMLElement>();
-  usePrinter({ options, ref });
+  const ref = useRef<HTMLDivElement>(null);
+  const { printer } = usePrinter({
+    options: props.options,
+    ref,
+  });
+  useEffect(() => {
+    printer?.build().init({
+      copyStyles: true,
+      copyFonts: true,
+    });
+  }, []);
+
   return createElement(
     "div",
     {
       ref,
     },
-    children
+    props.children
   );
 }
