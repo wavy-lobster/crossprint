@@ -12,7 +12,7 @@
     "clean": "rm -rf ./lib/",
     "cm": "cz",
     "lint": "eslint ./src/ --fix",
-    "prepare": "husky install",
+    "prepare": "husky install .husky",
     "semantic-release": "semantic-release",
     "typecheck": "tsc --noEmit"
   },
