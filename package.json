@@ -3,9 +3,9 @@
   "version": "1.0.1",
   "description": "CrossPrint is a lightweight library that enables you to convert HTML or any supported framework cross-browser",
   "files": [
-    "lib/**/*"
+    "dist/**/*"
   ],
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project tsconfig.build.json && npm run copy",
     "copy": "ncp ./package.json ./dist/package.json && ncp ./README.md ./dist/README.md && ncp ./LICENSE ./dist/LICENSE",
