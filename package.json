@@ -1,6 +1,6 @@
 {
   "name": "crossprint",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "description": "CrossPrint is a lightweight library that enables you to convert HTML or any supported framework cross-browser",
   "files": [
     "lib/**/*"
@@ -110,18 +110,9 @@
         }
       ],
       [
-        "@semantic-release/github",
-        {
-          "assets": [
-            "./dist/**/*"
-          ],
-          "message": "chore: Release ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-        }
-      ],
-      [
         "@semantic-release/npm",
         {
-          "pkgRoot": "dist"
+          "pkgRoot": "./dist/"
         }
       ]
     ]
