@@ -5,6 +5,11 @@
   "files": [
     "dist/**/*"
   ],
+  "exports": {
+    "./*": {
+      "default": "./dist/**/*"
+    }
+  },
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project tsconfig.build.json && npm run copy",
